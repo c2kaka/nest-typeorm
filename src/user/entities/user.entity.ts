@@ -11,4 +11,7 @@ export class User {
     length: 100,
   })
   name: string;
+
+  @Column()
+  email: string;
 }
