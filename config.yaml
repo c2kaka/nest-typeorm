@@ -1,6 +1,6 @@
 db:
   mysql_server_host: 'localhost'
   mysql_server_port: 3306
-  mysql_server_username: 'root'
-  mysql_server_password: 'fanoy'
-  mysql_server_database: 'typeorm_test'
+  mysql_server_username: 'xxx'
+  mysql_server_password: 'xxx'
+  mysql_server_database: 'xxx'
