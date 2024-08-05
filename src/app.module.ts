@@ -5,7 +5,6 @@ import { UserModule } from './user/user.module';
 import { CityModule } from './city/city.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { DbConfModule } from './db-conf/db-conf.module';
-import configuration from './config/configuration';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './user/entities/user.entity';
 import { City } from './city/entities/city.entity';
@@ -15,7 +14,8 @@ import { City } from './city/entities/city.entity';
     UserModule,
     ConfigModule.forRoot({
       isGlobal: true,
-      load: [configuration],
+      // load: [configuration],
+      envFilePath: ['src/.env', 'src/.env.development'],
     }),
     // TypeOrmModule.forRoot({
     //   type: 'mysql',
@@ -34,16 +34,39 @@ import { City } from './city/entities/city.entity';
     //     authPlugins: 'sha256_password',
     //   },
     // }),
+    // TypeOrmModule.forRootAsync({
+    //   imports: [ConfigModule],
+    //   useFactory(configService: ConfigService) {
+    //     return {
+    //       type: 'mysql',
+    //       host: configService.get('db.mysql_server_host'),
+    //       port: configService.get('db.mysql_server_port'),
+    //       username: configService.get('db.mysql_server_username'),
+    //       password: configService.get('db.mysql_server_password'),
+    //       database: configService.get('db.mysql_server_database'),
+    //       entities: [User, City],
+    //       synchronize: false,
+    //       migrations: ['./src/migrations/*.ts'],
+    //       logging: true,
+    //       poolSize: 10,
+    //       connectorPackage: 'mysql2',
+    //       extra: {
+    //         authPlugins: 'sha256_password',
+    //       },
+    //     };
+    //   },
+    //   inject: [ConfigService],
+    // } as any),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       useFactory(configService: ConfigService) {
         return {
           type: 'mysql',
-          host: configService.get('db.mysql_server_host'),
-          port: configService.get('db.mysql_server_port'),
-          username: configService.get('db.mysql_server_username'),
-          password: configService.get('db.mysql_server_password'),
-          database: configService.get('db.mysql_server_database'),
+          host: configService.get('mysql_server_host'),
+          port: configService.get('mysql_server_port'),
+          username: configService.get('mysql_server_username'),
+          password: configService.get('mysql_server_password'),
+          database: configService.get('mysql_server_database'),
           entities: [User, City],
           synchronize: false,
           migrations: ['./src/migrations/*.ts'],
